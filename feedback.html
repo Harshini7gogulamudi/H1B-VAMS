@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Provide Feedback</title>
+</head>
+<body>
+    <h2>Provide Feedback for Your Application</h2>
+    <form action="feedback.php" method="POST">
+        Application ID: <input type="number" name="application_id" required><br><br>
+        Feedback: <textarea name="feedback_text" required></textarea><br><br>
+        Rating (1-5): <input type="number" name="rating" min="1" max="5" required><br><br>
+        <button type="submit">Submit Feedback</button>
+    </form>
+</body>
+</html>

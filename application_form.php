@@ -1,74 +1,54 @@
 <?php
-// application_form.php
-session_start();
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    // Sanitize and store the form inputs
+    $passport_number = htmlspecialchars(trim($_POST['passport_number']));
+    $full_name = htmlspecialchars(trim($_POST['full_name']));
+    $organization_name = htmlspecialchars(trim($_POST['organization_name']));
+    $job_title = htmlspecialchars(trim($_POST['job_title']));
+    $job_category = htmlspecialchars(trim($_POST['job_category']));
+    $application_status = htmlspecialchars(trim($_POST['application_status']));
+    $comments = htmlspecialchars(trim($_POST['comments']));
 
-if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
-    exit();
-}
+    // You can now process/store/send this data
+    // For demonstration, we'll just display a simple success message
+    ?>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Application Submitted</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <style>
+            body {
+                background-color: #f8f9fa;
+                padding: 40px;
+                font-family: Arial, sans-serif;
+            }
 
-include('db_connection.php');
+            .confirmation-box {
+                background-color: #ffffff;
+                padding: 30px;
+                border-radius: 8px;
+                box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+                max-width: 600px;
+                margin: auto;
+                text-align: center;
+            }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $passport_number = $_POST['passport_number'];
-    $full_name = $_POST['full_name'];
-    $email = $_POST['email'];
-    $organization_name = $_POST['organization_name'];
-    $job_title = $_POST['job_title'];
-    $job_category = $_POST['job_category'];
-    $application_status = "Pending";
-    $comments = $_POST['comments'];
+            h2 {
+                color: #28a745;
+            }
 
-    $sql = "INSERT INTO applications (passport_number, full_name, email, organization_name, job_title, job_category, application_status, comments)
-            VALUES ('$passport_number', '$full_name', '$email', '$organization_name', '$job_title', '$job_category', '$application_status', '$comments')";
-
-    if ($conn->query($sql) === TRUE) {
-        echo "Application submitted successfully!";
-    } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
-    }
-
-    $conn->close();
-}
-?>
-
-<!-- HTML Form for Application Submission -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Application Form</title>
-</head>
-<body>
-    <h2>Submit Application</h2>
-
-    <form method="POST" action="application_form.php">
-        <label>Passport Number:</label>
-        <input type="text" name="passport_number" required><br><br>
-
-        <label>Full Name:</label>
-        <input type="text" name="full_name" required value="<?php echo $_SESSION['user_name']; ?>" readonly><br><br>
-        
-        <label>Email:</label>
-        <input type="email" name="email" required value="<?php echo $_SESSION['user_email']; ?>" readonly><br><br>
-        
-        <label>Organization Name:</label>
-        <input type="text" name="organization_name" required><br><br>
-        
-        <label>Job Title:</label>
-        <input type="text" name="job_title" required><br><br>
-        
-        <label>Job Category:</label>
-        <input type="text" name="job_category" required><br><br>
-        
-        <label>Comments:</label>
-        <textarea name="comments" required></textarea><br><br>
-
-        <input type="submit" value="Submit Application">
-    </form>
-
-    <br>
-    <a href="logout.php">Logout</a>  <!-- Logout link -->
-</body>
-</html>
+            p {
+                margin: 10px 0;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="confirmation-box">
+            <h2>Application Submitted Successfully!</h2>
+            <p><strong>Passport Number:</strong> <?php echo $passport_number; ?></p>
+            <p><strong>Full Name:</strong> <?php echo $full_name; ?></p>
+            <p><strong>Organization:</strong> <?php echo $organization_name; ?></p>
+            <p><strong>Job Title:</strong> <?php echo $job_title; ?></p>
+            <p><strong>Job Category:</strong> <?php echo $job_category; ?></_

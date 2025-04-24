@@ -18,17 +18,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
-        // Fetch the user record
         $user = $result->fetch_assoc();
 
-        // Verify password
         if (password_verify($password, $user['password'])) {
-            // Password is correct, create session variables
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['user_name'] = $user['full_name'];
             $_SESSION['user_email'] = $user['email'];
-
-            // Redirect to the application form page
             header("Location: application_form.php");
             exit();
         } else {
@@ -42,30 +37,101 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
-<!-- HTML Form for Login -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #e6f7ff;
+            font-family: sans-serif;
+        }
+
+        .container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card {
+            width: 100%;
+            max-width: 400px;
+            padding: 2rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            background-color: #fff;
+        }
+
+        .form-label {
+            font-weight: 500;
+        }
+
+        .btn-primary {
+            background-color: #0070c0;
+            border-color: #0070c0;
+        }
+
+        .btn-primary:hover {
+            background-color: #005691;
+            border-color: #005691;
+        }
+
+        .register-link {
+            display: block;
+            margin-top: 1rem;
+            text-align: center;
+            color: #0070c0;
+        }
+
+        .register-link:hover {
+            text-decoration: underline;
+        }
+
+        .error-message {
+            color: #dc3545;
+            margin-bottom: 1rem;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: #343a40;
+        }
+    </style>
 </head>
 <body>
-    <h2>Login</h2>
 
-    <!-- Display error message if login fails -->
-    <?php if (isset($error_message)) { echo "<p style='color:red;'>$error_message</p>"; } ?>
+<div class="container">
+    <div class="card">
+        <h2>Login</h2>
 
-    <form method="POST" action="login.php">
-        <label>Email:</label>
-        <input type="email" name="email" required><br><br>
+        <?php if (isset($error_message)) { ?>
+            <div class="error-message"><?php echo $error_message; ?></div>
+        <?php } ?>
 
-        <label>Password:</label>
-        <input type="password" name="password" required><br><br>
+        <form method="POST" action="login.php">
+            <div class="mb-3">
+                <label for="email" class="form-label">Email address:</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
 
-        <input type="submit" value="Login">
-    </form>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password:</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
 
-    <p>Don't have an account? <a href="register.php">Register here</a></p>
+            <button type="submit" class="btn btn-primary w-100">Login</button>
+        </form>
+
+        <a href="register.php" class="register-link">Don't have an account? Register here</a>
+    </div>
+</div>
+
 </body>
 </html>

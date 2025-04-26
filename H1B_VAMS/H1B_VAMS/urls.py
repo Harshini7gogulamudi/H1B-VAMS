@@ -16,10 +16,23 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
 from VAMS_application.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name='login'),
-    path('registration/', registration, name='registration')
-]
+    path('registration/', registration, name='registration'),
+    path('logout/', logout, name='logout'),
+    path('employee/<str:name>', employee, name='employee_page'),
+    path('employee/<str:name>/update information', employeeUpdate, name='employee_update_info'),
+    path('employer/<str:name>/<str:orgName>/', employer, name='employer_page'),
+    path('employer/<str:name>/<str:orgName>/application form/', applicationForm, name='application_form'),
+    path('employer/<str:name>/<str:orgName>/update information/', employerUpdate, name='employer_update_info'),
+    path('employer/<str:name>/<str:orgName>/employee registration/', employeeRegistration, name='employee_registration'),
+    path('employer/<str:name>/<str:orgName>/feedback/', employerFeedback, name='employer_feedback'),
+    path('admin/<str:name>/', adminPage, name='admin_panel'),
+    path('admin/<str:name>/employer registration', employerRegistration, name='employer_registration')
+
+] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

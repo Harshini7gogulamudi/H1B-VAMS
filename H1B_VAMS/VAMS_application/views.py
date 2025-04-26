@@ -19,3 +19,38 @@ def registration(request):
 
     elif request.method == 'POST':
         pass
+
+def employee(request, name):
+    ...
+
+
+def employeeUpdate(request, name):
+    ...
+
+
+def employer(request, name, orgName):
+    ...
+
+
+def applicationForm(request, name, orgName):
+    ...
+
+
+def employerUpdate(request, name, orgName):
+    ...
+
+
+def employeeRegistration(request, name, orgName):
+    ...
+
+
+def employerFeedback(request, name, orgName):
+    ...
+
+
+def adminPage(request, name, orgName):
+    ...
+
+
+def employerRegistration(request, name, orgName):
+    ...

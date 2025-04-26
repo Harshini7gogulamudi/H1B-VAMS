@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Applications Dashboard</title>
+    <!-- Bootstrap CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container my-5">
+    <h2 class="mb-4">Applications</h2>
+
+    <table class="table table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>#</th>
+                <th>Full Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Gender</th>
+                <th>Profile Image</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for application in applications %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ application.user.get_full_name }}</td>
+                <td>{{ application.user.email }}</td>
+                <td>{{ application.role }}</td>
+                <td>{{ application.gender }}</td>
+                <td>
+                    {% if application.userProfileImage %}
+                        <img src="{{ application.userProfileImage.url }}" alt="Profile Image" class="img-thumbnail" style="width: 80px; height: 80px;">
+                    {% else %}
+                        No Image
+                    {% endif %}
+                </td>
+                <td>
+                    <form method="post" action="">
+                        {% csrf_token %}
+                        <button type="submit" name="action" value="approve" class="btn btn-success btn-sm">Approve</button>
+                        <button type="submit" name="action" value="reject" class="btn btn-danger btn-sm">Reject</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+
+<!-- Bootstrap JS Bundle (Optional if you want modal or alert support) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

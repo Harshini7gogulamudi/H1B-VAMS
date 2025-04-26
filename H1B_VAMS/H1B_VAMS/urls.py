@@ -32,7 +32,7 @@ urlpatterns = [
     path('employer/<str:name>/<str:orgName>/update information/', employerUpdate, name='employer_update_info'),
     path('employer/<str:name>/<str:orgName>/employee registration/', employeeRegistration, name='employee_registration'),
     path('employer/<str:name>/<str:orgName>/feedback/', employerFeedback, name='employer_feedback'),
-    path('admin/<str:name>/', adminPage, name='admin_panel'),
-    path('admin/<str:name>/employer registration', employerRegistration, name='employer_registration')
+    path('adminPage/<str:name>/', adminPage, name='admin_panel'),
+    path('adminPage/<str:name>/employer registration', employerRegistration, name='employer_registration')
 
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
